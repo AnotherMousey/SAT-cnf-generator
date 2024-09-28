@@ -1,0 +1,1 @@
+ls sudoku.cnf | xargs -n 1 ./kissat --time=900 --relaxed > SAT.txt

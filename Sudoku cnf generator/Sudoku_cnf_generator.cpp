@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_DEPRECATE
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -220,8 +222,7 @@ void print_cnf()
 signed main()
 {
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    // freopen("sudoku.inp", "r", stdin);
-    // freopen("sudoku.cnf", "w", stdout);
+    freopen("sudoku.cnf", "w", stdout);
     int t = 1;
     while(t--)
     {
