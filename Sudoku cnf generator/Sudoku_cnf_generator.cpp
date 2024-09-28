@@ -17,9 +17,10 @@ int encode(Node cell)
 
 Node decode(int val)
 {
-    int k = val % n; val /= n;
-    int j = val % n; val /= n;
-    int i = val;
+    int k = val % n; val = (val-k) / n;
+    if(k==0) k=4;
+    int j = val % n + 1; val = (val-j+1) / n;
+    int i = val + 1;
     return Node(i, j, k);
 }
 
@@ -33,11 +34,12 @@ void update_cell(int i, int j, int k)
     for(int v = 1; v <= n; v++)
     {
         if(v==k) continue;
-        single_clause.push_back(-encode(Node(i, j, k)));
+        single_clause.push_back(-encode(Node(i, j, v)));
         clause.push_back(single_clause);
 
         single_clause.clear();
     } // update the clauses related to cell (i, j) with value other than k
+
 
     for(int v = 1; v <= n; v++)
     {
@@ -45,7 +47,7 @@ void update_cell(int i, int j, int k)
         single_clause.push_back(-encode(Node(i, v, k)));
     }
     clause.push_back(single_clause); // update the clauses related to row i
-    clause.clear();
+    single_clause.clear();
 
     for(int v = 1; v <= n; v++)
     {
@@ -53,7 +55,7 @@ void update_cell(int i, int j, int k)
         single_clause.push_back(-encode(Node(v, j, k)));
     }
     clause.push_back(single_clause); // update the clauses related to column j
-    clause.clear();
+    single_clause.clear();
 
     int sqrt_n = sqrt(n);
     int x = (i - 1) / sqrt_n, y = (j - 1) / sqrt_n;
@@ -67,7 +69,6 @@ void update_cell(int i, int j, int k)
         }
     }
     clause.push_back(single_clause); // update the clauses related to block
-
 } // update the logic value of node (i, j, k) and the clauses related to row, column and block. 
 
 void input()
@@ -219,7 +220,10 @@ void print_cnf()
 signed main()
 {
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    while(true)
+    // freopen("sudoku.inp", "r", stdin);
+    // freopen("sudoku.cnf", "w", stdout);
+    int t = 1;
+    while(t--)
     {
         input();
         solve();
